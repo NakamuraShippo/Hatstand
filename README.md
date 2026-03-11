@@ -1,139 +1,144 @@
 # Hatstand
 
-自分の PC でAIチャットができるデスクトップアプリです。インターネット上のサービスにデータを送ることなく、手元の環境だけで会話できます。
+A desktop app for AI chat on your own PC. Have conversations entirely on your local machine — no data is sent to any online service.
 
-## できること
+## Features
 
-- ローカルの LLM を読み込んで会話する
-- 会話を自動保存し、あとから続きを再開する
-- セッションを Markdown / JSON でエクスポートする
-- System Prompt を切り替えて応答スタイルを変える
-- 複数モデルの簡易ベンチマークを実行する
+- Load local LLMs and chat with them
+- Auto-save conversations and resume them later
+- Export sessions as Markdown or JSON
+- Switch System Prompts to change response styles
+- Run simple benchmarks across multiple models
 
-## 動作環境
+## Requirements
 
 - Windows 10 / 11
-- Python 3.11 以上 3.14 未満
-- モデルサイズに応じた GPU メモリ（VRAM）またはシステムメモリ
+- Python 3.11 or later, below 3.14
+- GPU memory (VRAM) or system memory appropriate for the model size
 
-> モデルが PC に保存されていない場合、初回の読み込み時に Hugging Face から自動ダウンロードされます。ストレージの空き容量にご注意ください。
+> If a model is not already saved on your PC, it will be automatically downloaded from Hugging Face on first load. Please ensure you have enough free storage.
 
-## セットアップ
+## Setup
 
-### 1. 仮想環境を作る
+### 1. Create a virtual environment
 
 ```powershell
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 ```
 
-### 2. インストールする
+### 2. Install dependencies
 
 ```powershell
 pip install -r requirements.txt
 ```
 
-量子化モデル（4bit / 8bit）も使いたい場合:
+To use quantized models (4-bit / 8-bit):
 
 ```powershell
 pip install bitsandbytes>=0.45
 ```
 
-### 3. 起動する
+### 3. Launch
 
-一番かんたんな方法 — `boot.bat` をダブルクリックしてください。
+The easiest way — double-click `boot.bat`.
 
-または、仮想環境を有効にした状態で:
+Or, with the virtual environment activated:
 
 ```powershell
 hatstand
 ```
 
-## 使い方
+## Usage
 
-### モデルを読み込む
+### Loading a model
 
-1. **Models** タブを開く
-2. モデルプリセットを選ぶ
-3. **Load** を押す
+1. Open the **Models** tab
+2. Select a model preset
+3. Click **Load**
 
-初回はダウンロードが入るため、しばらく待ちます。
+The first time may take a while due to downloading.
 
-#### モデルを手動で配置する場合
+#### Placing models manually
 
-オフライン環境などで自動ダウンロードが使えない場合は、モデルファイルを手動で配置できます。
+If automatic downloading is unavailable (e.g. in an offline environment), you can place model files manually.
 
-| 方法 | 配置先 |
+| Method | Location |
 |---|---|
-| Hugging Face キャッシュに置く | `%USERPROFILE%\.cache\huggingface\hub\` （デフォルト） |
-| Settings で変更した場合 | **Settings** タブの **HF Cache Dir** に指定したフォルダ |
-| 任意のローカルパスを直接指定 | モデル ID の代わりにフォルダの絶対パスを入力 |
+| Place in Hugging Face cache | `%USERPROFILE%\.cache\huggingface\hub\` (default) |
+| Custom cache directory | The folder specified in **HF Cache Dir** on the **Settings** tab |
+| Specify a local path directly | Enter the absolute folder path instead of a model ID |
 
-Hugging Face キャッシュに手動配置する場合は、`huggingface-cli download` であらかじめダウンロードしたスナップショットをそのままコピーしてください。
+When placing files manually in the Hugging Face cache, copy the snapshot as downloaded by `huggingface-cli download`.
 
-### 会話する
+### Chatting
 
-1. **Chat** タブを開く
-2. メッセージを入力して送信ボタンを押す
+1. Open the **Chat** tab
+2. Type a message and click the send button
 
-生成中は送信ボタンが停止ボタンに変わります。押すと途中で止められます。
+While generating, the send button changes to a stop button. Click it to stop generation mid-way.
 
-### セッションを管理する
+### Managing sessions
 
-- 会話は自動保存されます
-- 左側の **Session** パネルから過去の会話を開けます
-- 各セッションのメニューから操作できます:
-  - **Pinned** — お気に入りとして固定
-  - **Duplicate** — 複製
-  - **Delete** — 削除
-  - **Export MD** / **Export JSON** — ファイルに書き出し
+- Conversations are auto-saved
+- Open past conversations from the **Session** panel on the left
+- Use the menu on each session for these actions:
+  - **Pinned** — Pin as a favorite
+  - **Duplicate** — Create a copy
+  - **Delete** — Remove
+  - **Export MD** / **Export JSON** — Export to file
 
-### System Prompt を変える
+### Changing the System Prompt
 
-**System Prompt** タブから、AIの話し方や制約を切り替えられます。よく使う内容はプリセットとして保存しておけます。
+From the **System Prompt** tab, you can change how the AI responds and what constraints it follows. Frequently used prompts can be saved as presets.
 
-### ベンチマークを取る
+### Running benchmarks
 
-**Benchmark** タブで、複数のモデルプリセットを順に読み込んで性能を比較できます。結果は CSV でエクスポートできます。
+In the **Benchmark** tab, you can load multiple model presets in sequence to compare performance. Results can be exported as CSV.
 
-### 設定を変える
+### Changing settings
 
-**Settings** タブで以下を変更できます:
+The **Settings** tab lets you change:
 
-- Hugging Face キャッシュの保存先
-- アプリデータの保存先
-- ログレベル
-- デフォルトのモデルプリセット
-- テーマ（ライト / ダーク）
+- Hugging Face cache directory
+- App data directory
+- Log level
+- Default model preset
+- Theme (Light / Dark)
 
-変更後は **Save Settings** を押してください。
+Click **Save Settings** after making changes.
 
-## データの保存場所
+## Data storage
 
-デフォルトでは `data/` フォルダに保存されます。
+By default, data is stored in the `data/` folder.
 
-| 種類 | 場所 |
+| Type | Location |
 |---|---|
-| 設定 | `data/settings.json` |
-| セッション | `data/sessions/` |
-| ログ | `data/logs/app.log` |
+| Settings | `data/settings.json` |
+| Sessions | `data/sessions/` |
+| Logs | `data/logs/app.log` |
 
-Settings の **App Data Path** を設定すると、セッションとログの保存先を変更できます。
+You can change the storage location for sessions and logs by setting **App Data Path** in Settings.
 
-## 対応モデル形式
+## Supported model formats
 
-現在は **Transformers 形式**（safetensors / bin）のモデルに対応しています。Hugging Face で `AutoModelForCausalLM` として読み込める因果言語モデルであれば、Qwen 以外のモデルファミリーも利用できます。
+Currently supports **Transformers format** (safetensors / bin) models. Any causal language model loadable via `AutoModelForCausalLM` on Hugging Face can be used, not just Qwen family models.
 
-> **GGUF 形式**には現在対応していません。今後のバージョンで対応予定です。
+> **GGUF format** is not currently supported. Support is planned for a future release.
 
-## うまくいかないとき
+## Troubleshooting
 
-| 症状 | 対処 |
+| Symptom | Solution |
 |---|---|
-| モデルが読み込めない | VRAM / メモリ不足の可能性があります。より小さいモデルを試してください |
-| 量子化モデルが使えない | `pip install -e ".[quant]"` で bitsandbytes を追加してください |
-| 初回の読み込みが遅い | モデルのダウンロード中です。完了すれば次回からは速くなります |
+| Model fails to load | Likely insufficient VRAM / memory. Try a smaller model |
+| Quantized models don't work | Install bitsandbytes with `pip install -e ".[quant]"` |
+| First load is slow | The model is being downloaded. Subsequent loads will be faster |
 
-## ライセンス
+## NakamuraShippo
+Patreon  : https://www.patreon.com/cw/NakamuraShippo
+X        : [@nakamurashippo](https://x.com/Nakamurashippo)
+
+
+## License
 
 [Apache License 2.0](LICENSE)
