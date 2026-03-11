@@ -1,0 +1,6 @@
+flet
+torch>=2.5
+transformers>=4.49
+accelerate>=1.3
+huggingface_hub>=0.30
+psutil>=6.0
