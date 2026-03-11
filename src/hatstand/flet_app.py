@@ -8,6 +8,7 @@ from pathlib import Path
 import flet as ft
 
 from hatstand.application.playground_service import PlaygroundService
+from hatstand.backends.transformers_backend import TransformersBackend
 from hatstand.core.chat_features import available_output_modes
 from hatstand.core.model_registry import (
     DEFAULT_MODEL_IDS,

@@ -534,6 +534,15 @@ class TransformersBackend:
             resolved = str(local_path.resolve())
             self._logger.info("using_local_model_directory | path=%s", resolved)
             return resolved
+
+        # Check if model is already in HF cache before attempting download
+        cached_path = self._find_cached_snapshot(model_id, revision)
+        if cached_path:
+            self._logger.info(
+                "using_cached_model | model_id=%s path=%s", model_id, cached_path
+            )
+            return cached_path
+
         try:
             from huggingface_hub import snapshot_download
         except ImportError as exc:
@@ -566,6 +575,27 @@ class TransformersBackend:
             resolved_snapshot,
         )
         return resolved_snapshot
+
+    def _find_cached_snapshot(
+        self, model_id: str, revision: str | None = None
+    ) -> str | None:
+        """Return the local snapshot path if the model is already in HF cache."""
+        try:
+            from huggingface_hub import scan_cache_dir
+        except ImportError:
+            return None
+        try:
+            cache_info = scan_cache_dir(self._cache_dir)
+        except Exception:
+            return None
+        target_revision = revision or "main"
+        for repo in cache_info.repos:
+            if repo.repo_id != model_id:
+                continue
+            for rev in repo.revisions:
+                if target_revision in rev.refs or (not revision and rev.refs):
+                    return str(rev.snapshot_path)
+        return None
 
     @staticmethod
     def normalize_model_id(raw_input: str) -> str:
