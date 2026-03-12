@@ -1,5 +1,7 @@
 # Hatstand
 
+[日本語READMEはこちら](https://github.com/NakamuraShippo/Hatstand/blob/main/README_JP.md)  
+
 A desktop app for AI chat on your own PC. Have conversations entirely on your local machine — no data is sent to any online service.
 
 ## Features
