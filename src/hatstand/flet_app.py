@@ -82,6 +82,10 @@ class FletPlaygroundApp:
             "#0F172A" if self.service.settings.theme == "dark" else "#F8FAFC"
         )
         if self.page.window is not None:
+            _icon_path = (
+                Path(__file__).resolve().parent.parent.parent / "assets" / "favicon.ico"
+            )
+            self.page.window.icon = str(_icon_path)
             self.page.window.width = 1540
             self.page.window.height = 980
             self.page.window.min_width = 960
@@ -499,17 +503,34 @@ class FletPlaygroundApp:
                 expand=True,
                 spacing=18,
                 controls=[
-                    ft.Column(
-                        spacing=2,
+                    ft.Row(
+                        spacing=12,
+                        vertical_alignment=ft.CrossAxisAlignment.CENTER,
                         controls=[
-                            ft.Text(
-                                "Hatstand",
-                                size=28,
-                                weight=ft.FontWeight.W_700,
-                                color="#F8FAFC",
+                            ft.Image(
+                                src=str(
+                                    Path(__file__).resolve().parent.parent.parent
+                                    / "assets"
+                                    / "favicon.ico"
+                                ),
+                                width=40,
+                                height=40,
                             ),
-                            ft.Text(
-                                "Local playground on Flet", size=13, color="#94A3B8"
+                            ft.Column(
+                                spacing=2,
+                                controls=[
+                                    ft.Text(
+                                        "Hatstand",
+                                        size=28,
+                                        weight=ft.FontWeight.W_700,
+                                        color="#F8FAFC",
+                                    ),
+                                    ft.Text(
+                                        "Local playground on Flet",
+                                        size=13,
+                                        color="#94A3B8",
+                                    ),
+                                ],
                             ),
                         ],
                     ),
@@ -519,8 +540,25 @@ class FletPlaygroundApp:
                         on_click=self._on_new_chat_clicked,
                     ),
                     ft.Column(spacing=8, controls=nav_controls, expand=True),
+                    ft.Container(
+                        alignment=ft.Alignment(0, 0),
+                        on_click=self._on_sponsor_clicked,
+                        content=ft.Image(
+                            src=str(
+                                Path(__file__).resolve().parent.parent.parent
+                                / "assets"
+                                / "sponsor_logo.png"
+                            ),
+                            width=150,
+                        ),
+                    ),
                 ],
             ),
+        )
+
+    async def _on_sponsor_clicked(self, _: ft.ControlEvent) -> None:
+        await self.page.launch_url(
+            "https://www.patreon.com/cw/NakamuraShippo/membership"
         )
 
     def _build_card(self, title: str, subtitle: str, content: ft.Control) -> ft.Control:
@@ -749,10 +787,11 @@ class FletPlaygroundApp:
                     expand=True,
                     border_radius=18,
                     bgcolor=(
-                        "#0F172A"
+                        "rgba(15,23,42,0.55)"
                         if self.service.settings.theme == "dark"
-                        else "#F8FAFC"
+                        else "rgba(248,250,252,0.55)"
                     ),
+                    blur=ft.Blur(12, 12, ft.BlurTileMode.MIRROR),
                     padding=18,
                     on_hover=self._on_chat_messages_hover,
                     content=ft.Stack(
@@ -779,7 +818,12 @@ class FletPlaygroundApp:
             expand=True,
             border_radius=22,
             border=ft.Border.all(1, "#334155"),
-            bgcolor="#111827" if self.service.settings.theme == "dark" else "#FFFFFF",
+            bgcolor=(
+                "rgba(17,24,39,0.50)"
+                if self.service.settings.theme == "dark"
+                else "rgba(255,255,255,0.50)"
+            ),
+            blur=ft.Blur(14, 14, ft.BlurTileMode.MIRROR),
             padding=22,
             content=self.chat_page_stack,
         )
@@ -1408,7 +1452,7 @@ class FletPlaygroundApp:
     def _build_message_bubble(self, message: ChatMessage) -> ft.Control:
         is_user = message.role == MessageRole.USER.value
         label = "You" if is_user else "Assistant"
-        background = "#7C2D12" if is_user else "#1E293B"
+        background = "#B45309" if is_user else "rgba(30,41,59,0.55)"
         content_control = self._build_message_content_control(message)
         action_controls = [
             ft.TextButton(
@@ -1445,9 +1489,11 @@ class FletPlaygroundApp:
             controls=[
                 ft.Container(
                     width=340 if is_user else 680,
+                    margin=ft.Margin.only(left=80) if not is_user else None,
                     padding=16,
                     border_radius=18,
                     bgcolor=background,
+                    border=ft.Border.all(1, ft.Colors.with_opacity(0.15, "#E2E8F0")),
                     content=ft.Column(
                         spacing=6,
                         controls=[
