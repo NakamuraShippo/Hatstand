@@ -1,3 +1,4 @@
+![](https://github.com/NakamuraShippo/Hatstand/blob/main/assets/Hatstand_titlelogo.png)
 # Hatstand
 
 [日本語READMEはこちら](https://github.com/NakamuraShippo/Hatstand/blob/main/README_JP.md)  
