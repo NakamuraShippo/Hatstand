@@ -134,10 +134,10 @@ Currently supports **Transformers format** (safetensors / bin) models. Any causa
 | Quantized models don't work | Install bitsandbytes with `pip install -e ".[quant]"` |
 | First load is slow | The model is being downloaded. Subsequent loads will be faster |
 
-## NakamuraShippo
-X        : [@nakamurashippo](https://x.com/Nakamurashippo)
-
 ## License
 [Apache License 2.0](LICENSE)
+
+## NakamuraShippo
+X        : [@nakamurashippo](https://x.com/Nakamurashippo)
 
 [![支援をお願いします](https://github.com/NakamuraShippo/Hatstand/blob/main/assets/sponsor_logo.png)](https://www.patreon.com/cw/NakamuraShippo)
