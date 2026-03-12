@@ -1,3 +1,4 @@
+![](https://github.com/NakamuraShippo/Hatstand/blob/main/assets/Hatstand_titlelogo.png)
 # Hatstand
 
 自分の PC でAIチャットができるデスクトップアプリです。インターネット上のサービスにデータを送ることなく、手元の環境だけで会話できます。
