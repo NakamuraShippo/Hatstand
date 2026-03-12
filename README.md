@@ -135,8 +135,9 @@ Currently supports **Transformers format** (safetensors / bin) models. Any causa
 | First load is slow | The model is being downloaded. Subsequent loads will be faster |
 
 ## NakamuraShippo
-Patreon  : https://www.patreon.com/cw/NakamuraShippo  
 X        : [@nakamurashippo](https://x.com/Nakamurashippo)
 
 ## License
 [Apache License 2.0](LICENSE)
+
+[![支援をお願いします](https://github.com/NakamuraShippo/Hatstand/blob/main/assets/sponsor_logo.png)](https://www.patreon.com/cw/NakamuraShippo)
